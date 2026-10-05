@@ -1,0 +1,120 @@
+generator client {
+ provider = "prisma-client-js"
+}
+datasource db {
+ provider = "postgresql"
+ url = env("DATABASE_URL")
+}
+enum Visibility {
+ PRIVATE
+ PUBLIC
+}
+model User {
+ id String @id @default(cuid())
+ displayName String
+ email String? @unique
+ passwordHash String?
+ suspendedAt DateTime?
+ emailVerifiedAt DateTime?
+ termsAcceptedAt DateTime?
+ policyVersion String?
+ accountTokens AccountToken[]
+ blocks Block[] @relation("Blocker")
+ blockedBy Block[] @relation("Blocked")
+ reports Report[]
+ sessions Session[]
+ createdAt DateTime @default(now())
+ riotLink RiotLink?
+ passport Passport?
+ lfgPosts LFGPost[]
+}
+model RiotLink {
+ id String @id @default(cuid())
+ userId String @unique
+ puuid String @unique
+ consentedAt DateTime
+ revokedAt DateTime?
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ matches MatchSummary[]
+}
+model Passport {
+ id String @id @default(cuid())
+ userId String @unique
+ visibility Visibility @default(PRIVATE)
+ discoveryOptIn Boolean @default(false)
+ roles String[]
+ agents String[]
+ languages String[]
+ timeZone String @default("Asia/Kolkata")
+ availability Json
+ queueIntent String
+ rank String @default("Unranked")
+ onboarded Boolean @default(false)
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+model MatchSummary {
+ id String @id @default(cuid())
+ riotLinkId String
+ matchId String
+ agentId String
+ playedAt DateTime
+ roundsPlayed Int
+ summary Json
+ riotLink RiotLink @relation(fields: [riotLinkId], references: [id], onDelete: Cascade)
+ @@unique([riotLinkId, matchId])
+}
+model LFGPost {
+ id String @id @default(cuid())
+ authorId String
+ title String
+ region String
+ rolesNeeded String[]
+ expiresAt DateTime
+ createdAt DateTime @default(now())
+ author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+ @@index([region, expiresAt])
+}
+
+model Session {
+ tokenHash String @id
+ userId String
+ expiresAt DateTime
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ @@index([userId])
+ @@index([expiresAt])
+}
+model AuthAttempt {
+ key String @id
+ attempts Int @default(1)
+ expiresAt DateTime
+ @@index([expiresAt])
+}
+
+model AccountToken {
+ tokenHash String @id
+ userId String
+ purpose String
+ expiresAt DateTime
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ @@index([expiresAt])
+}
+model Block {
+ id String @id @default(cuid())
+ blockerId String
+ blockedId String
+ createdAt DateTime @default(now())
+ blocker User @relation("Blocker", fields: [blockerId], references: [id], onDelete: Cascade)
+ blocked User @relation("Blocked", fields: [blockedId], references: [id], onDelete: Cascade)
+ @@unique([blockerId, blockedId])
+ @@index([blockedId])
+}
+model Report {
+ id String @id @default(cuid())
+ reporterId String?
+ subjectId String
+ reason String
+ status String @default("OPEN")
+ createdAt DateTime @default(now())
+ reporter User? @relation(fields: [reporterId], references: [id], onDelete: SetNull)
+ @@index([status, createdAt])
+}

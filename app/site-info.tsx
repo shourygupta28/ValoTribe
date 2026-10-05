@@ -1,0 +1,3 @@
+import {operator} from '../lib/config';
+export function OperatorInfo(){const o=operator();return o.name&&o.email?<p>Operator: {o.name}. Contact: <a href={`mailto:${o.email}`}>{o.email}</a>.</p>:<p className="notice">Draft policy: the project owner must configure their legal name and contact email before opening registration or submitting this site.</p>}
+export function SiteFooter(){return <footer className="global-footer"><a href="/">App</a> · <a href="/demo">Demo</a> · <a href="/review">Reviewer guide</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a><p>Independent fan project. ValoTribe is not endorsed by or affiliated with Riot Games. VALORANT and Riot Games are trademarks of Riot Games, Inc.</p></footer>}

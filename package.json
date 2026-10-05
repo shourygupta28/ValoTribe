@@ -1,0 +1,41 @@
+{
+  "name": "valotribe",
+  "version": "0.3.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:demo": "node scripts/dev-demo.mjs",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "postinstall": "prisma generate",
+    "db:deploy": "prisma migrate deploy",
+    "db:seed:demo": "node scripts/seed-demo.mjs",
+    "test:integration": "node scripts/integration.mjs",
+    "start:deploy": "prisma migrate deploy && next start --hostname 0.0.0.0 --port ${PORT:-3000}",
+    "maintenance": "node scripts/cleanup.mjs",
+    "reports": "node scripts/reports.mjs",
+    "test:browser": "node scripts/browser-qa.mjs"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "@prisma/client": "^6.16.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "prisma": "^6.16.0",
+    "@electric-sql/pglite": "0.5.8",
+    "@electric-sql/pglite-socket": "0.2.11"
+  },
+  "engines": {
+    "node": ">=22 <25"
+  }
+}

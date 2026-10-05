@@ -1,0 +1,1 @@
+export type Player = {id:string;puuid:string;name:string;tag:string;rank:string;roles:string[];agents:string[];languages:string[];start:number;end:number;intent:string;optedIn:boolean;visibility:'PUBLIC'|'PRIVATE'};
