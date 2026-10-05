@@ -13,8 +13,9 @@ if (basePath && !/^\/[A-Za-z0-9._/-]+$/.test(basePath)) {
 const files = [
   'app/layout.tsx', 'app/globals.css', 'app/live.css', 'app/icon.svg',
   'app/site-info.tsx', 'app/demo/page.tsx', 'app/demo/preview.tsx',
+  'app/demo/login-dashboard.tsx',
   'app/review/page.tsx', 'app/privacy/page.tsx', 'app/terms/page.tsx',
-  'lib/compatibility.mjs',
+  'lib/compatibility.mjs', 'lib/pages-demo.mjs',
 ];
 // An explicit allowlist keeps API routes, database code and .env files out of Pages.
 for (const file of files) {
@@ -26,7 +27,7 @@ for (const file of files) {
   }
   if (file === 'app/site-info.tsx') {
     source = source.replace('<footer className="global-footer">',
-      '<footer className="global-footer"><p className="notice">Static fictional demo. Accounts, email, saved profiles and live LFG are unavailable here. The policies describe the planned server app.</p>');
+      '<footer className="global-footer"><p className="notice">Static fictional demo. Demo login and dashboard changes run only in your browser. Real accounts, email and live LFG are unavailable here. The policies describe the server app.</p>');
   }
   const target = path.join(destination, file);
   await mkdir(path.dirname(target), {recursive: true});
@@ -35,7 +36,7 @@ for (const file of files) {
 await writeFile(path.join(destination, 'lib/config.ts'),
   "export function operator(){return {name:'',email:''}}\nexport function signupReady(){return false}\n");
 await writeFile(path.join(destination, 'app/page.tsx'),
-  "export {default,metadata} from './demo/page';\n");
+  "import LoginDashboard from './demo/login-dashboard';\nexport default function Page(){return <LoginDashboard/>}\n");
 await writeFile(path.join(destination, 'next.config.mjs'),
   `export default {output:'export',basePath:${JSON.stringify(basePath)},trailingSlash:true,poweredByHeader:false,images:{unoptimized:true}};\n`);
 const tsconfig = JSON.parse(await readFile(path.join(root, 'tsconfig.json'), 'utf8'));

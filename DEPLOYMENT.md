@@ -5,9 +5,15 @@ This is a full Next.js Node server with PostgreSQL, not a static export. You own
 ## GitHub Pages: fictional demo only
 
 GitHub Pages cannot run the Node server or PostgreSQL. The separate Pages build
-publishes the interactive fictional demo at `/`, plus `/demo/`, `/review/`,
+publishes the demo login and personal dashboard at `/`, plus `/demo/`, `/review/`,
 `/privacy/` and `/terms/`. Accounts, email, saved Passports and live LFG require
 the server deployment below. The policy pages are drafts for that server app.
+
+Sign in using **`valotribe@email.com`** and **`valotribe`**. These are public,
+fictional preview credentials, not a database account. The dashboard includes
+Passport editing, preference matches and fictional LFG posts. The login is kept
+in session storage for the browser tab; edits reset on reload or sign-out. No
+email is sent and no real data is saved.
 
 1. Push these files to the `main` branch of `shourygupta28/ValoTribe`.
 2. In the GitHub repository, open **Settings > Pages** and select **GitHub Actions** as the source.
