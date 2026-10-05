@@ -23,6 +23,11 @@ Discovery and LFG can help aspiring players find practice teammates for the expa
 
 ## Start or deploy
 
+For a GitHub Pages fictional demo, see the GitHub Pages section in **DEPLOYMENT.md**.
+`npm run build:pages` exports the demo and reviewer/policy pages; the included
+GitHub Actions workflow deploys them. Live accounts and database features need
+the server hosting described below.
+
 For a complete local preview with seven fictional accounts and sample LFG posts,
 use Node 22, run `npm ci`, then `npm run dev:demo` and open http://localhost:3000.
 This command applies the included database migrations and seeds an isolated

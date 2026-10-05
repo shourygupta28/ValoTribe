@@ -2,6 +2,25 @@
 
 This is a full Next.js Node server with PostgreSQL, not a static export. You own the deployment and any hosting/email charges. No deployed URL is included in this source archive.
 
+## GitHub Pages: fictional demo only
+
+GitHub Pages cannot run the Node server or PostgreSQL. The separate Pages build
+publishes the interactive fictional demo at `/`, plus `/demo/`, `/review/`,
+`/privacy/` and `/terms/`. Accounts, email, saved Passports and live LFG require
+the server deployment below. The policy pages are drafts for that server app.
+
+1. Push these files to the `main` branch of `shourygupta28/ValoTribe`.
+2. In the GitHub repository, open **Settings > Pages** and select **GitHub Actions** as the source.
+3. Open **Actions > Deploy demo to GitHub Pages > Run workflow**. Future pushes to `main` deploy automatically.
+4. After the workflow succeeds, open `https://shourygupta28.github.io/ValoTribe/`.
+
+To verify locally, use Node 22, run `npm ci` and `npm run build:pages`.
+The static artifact is `.pages-build/out`; never upload the repository or `.env` as
+the Pages artifact. The workflow derives the URL prefix from GitHub Pages settings
+so repository paths and custom domains work. For a local root-path preview, set
+`PAGES_BASE_PATH` to an empty string before building. No database or secrets are
+needed. The existing `npm run build` still builds the full server app.
+
 ## Recommended path: Render web service and PostgreSQL
 
 1. Extract the ZIP. Upload the **contents of the valotribe folder** to your GitHub repository root, including package-lock.json, prisma and render.yaml. Do not upload .env, node_modules, .next or secrets.
